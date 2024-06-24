@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Estate Company</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>The Estate Company</h1>
+
+  <div class="search-bar">
+    <input type="text" placeholder="Search by location...">
+    <button type="button">Search</button>
+  </div>
+
+  <div class="filters">
+    <h2>Filters</h2>
+    <form action="#">
+      <label for="price">Price Range:</label>
+      <select name="price" id="price">
+        <option value="all">All Prices</option>
+        <option value="below-₹10,000,000">Below ₹10,000,000</option>
+        <option value="₹10,000,000 - ₹50,000,000">₹10,000,000 - ₹50,000,000</option>
+        <option value="Above ₹50,000,000">Above ₹50,000,000</option>
+      </select>
+      <label for="type">Property Type:</label>
+      <select name="type" id="type">
+        <option value="all">All Types</option>
+        <option value="house">House</option>
+        <option value="apartment">Apartment</option>
+        <option value="Villa">Villa</option>
+      </select>
+      <button type="submit">Apply Filters</button>
+    </form>
+  </div>
+
+  <div class="listings">
+    <div class="property-card">
+      <img src="House.jpg" alt="Property Image">
+      <div class="details">
+        <h3>₹30,000,000</h3>
+        <p>3 Bed | 2 Bath | 1800 sqft</p>
+        <p>Anna Nagar 3rd Main Rd, Block R, Anna Nagar, Chennai, Tamil Nadu 600040</p>
+        <p>Type: Villa</p>
+        <a href="Detail.html">Details</a>
+      </div>
+    </div>
+    </div>
+
+    <div class="listings">
+        <div class="property-card">
+          <img src="House2.jpg" alt="Property Image">
+          <div class="details">
+            <h3>₹90,000,000</h3>
+            <p>4 Bed | 4 Bath | 3000 sqft</p>
+            <p>79, Z Block 11th St, Z Block, Sector Z2, Anna Nagar, Chennai, Tamil Nadu 600038</p>
+            <p>Type: Villa</p>
+            <a href="House.html">Details</a>
+          </div>
+        </div>
+        </div>
+
+        <div class="listings">
+            <div class="property-card">
+              <img src="House3.jpeg" alt="Property Image">
+              <div class="details">
+                <h3>₹9,000,000</h3>
+                <p>3 Bed | 3 Bath | 1850 sqft</p>
+                <p>3-27, Mothi Nagar Main Rd, Kaveri Nagar, Porur, Chennai, Tamil Nadu 600116</p>
+                <p>Type: House</p>
+                <a href="house1.html">Details</a>
+              </div>
+            </div>
+            </div>
+
+            <script>
+                document.getElementById('filter-form').addEventListener('submit', function(e) {
+                  e.preventDefault();
+                  const priceFilter = document.getElementById('price').value;
+                  const propertyCards = document.querySelectorAll('.property-card');
+                  const listingsContainer = document.querySelector('.listings');
+            
+                  // Create an array to hold the property cards
+                  const filteredCards = [];
+            
+                  propertyCards.forEach(card => {
+                    const price = parseInt(card.getAttribute('data-price'), 10);
+                    let showCard = false;
+            
+                    if (priceFilter === 'all') {
+                      showCard = true;
+                    } else if (priceFilter === 'below-10000000' && price < 10000000) {
+                      showCard = true;
+                    } else if (priceFilter === '10000000-50000000' && price >= 10000000 && price <= 50000000) {
+                      showCard = true;
+                    } else if (priceFilter === 'above-50000000' && price > 50000000) {
+                      showCard = true;
+                    }
+            
+                    if (showCard) {
+                      filteredCards.push(card);
+                    } else {
+                      card.style.display = 'none';
+                    }
+                  });
+            
+                  // Sort the filtered cards by price
+                  filteredCards.sort((a, b) => {
+                    return parseInt(a.getAttribute('data-price'), 10) - parseInt(b.getAttribute('data-price'), 10);
+                  });
+            
+                  // Clear the listings container and append the sorted filtered cards
+                  listingsContainer.innerHTML = '';
+                  filteredCards.forEach(card => {
+                    card.style.display = 'block';
+                    listingsContainer.appendChild(card);
+                  });
+                });
+              </script>
+</body>
+</html>
